@@ -1,0 +1,16 @@
+{
+  "name": "oclc-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@json2csv/node": "^7.0.3",
+    "axios": "^1.6.2"
+  }
+}
