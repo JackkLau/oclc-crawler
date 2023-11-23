@@ -31,9 +31,15 @@ async function start() {
         throw e;
     }
 }
-
-console.log('程序开始执行');
+const startTime = Date.now();
+console.log('程序开始执行', startTime);
 start().then(() => {
+    const duration = (Date.now() - startTime) / 1000;
+    console.log('程序共计执行时间', duration);
     console.log('程序正常完成执行');
-}).catch(console.error);
+}).catch( err =>{
+    const duration = (Date.now() - startTime) / 1000;
+    console.log('程序共计执行时间', duration);
+    console.log('程序异常 :>>', err);
+});
 

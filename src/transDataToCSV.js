@@ -4,10 +4,10 @@ const parser = new AsyncParser();
 
 
 async function transDataToCSV(originData = {}) {
-
-    const json = originData.map(v => format(v) );
+    const json = originData?.map(v => format(v) );
     const csv = await parser.parse(json).promise();
-    console.log('csv :>>', csv);
+    // console.log('csv :>>', csv);
+    console.log('csv 转换成功', originData?.length);
     return csv;
 }
 
@@ -27,7 +27,7 @@ function format(originData) {
         "出版地 - publicationPlace": originData.publicationPlace,
         "主题 - subjects": originData.subjects?.join(','),
         "简介 - summaries": originData.summaries?.join(','),
-        "是否同行审阅 - peerReviewed": originData.peerReviewed ? '是': '否',
+        "是否同行审阅 - peerReviewed": originData.peerReviewed ? '是': '否'
     }
 }
 
