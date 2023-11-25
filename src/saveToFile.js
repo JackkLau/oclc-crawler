@@ -8,11 +8,11 @@ async function saveToFile(publisher, data) {
        await fs.mkdir(folderPath)
     }
     const csv = await transDataToCSV(data.briefRecords);
-    await fs.appendFile(`${folderPath}${publisher}.csv`, csv).catch(e => console.log('写入文件异常', e));
+    await fs.appendFile(`${folderPath}${publisher}.csv`, csv + '\n', 'utf-8').catch(e => console.log('写入文件异常', e));
 
     for (let i = 0; i < data.briefRecords.length; i++) {
         const briefRecord = JSON.stringify(data.briefRecords[i])
-        await fs.appendFile(`${folderPath}${publisher}.json`, briefRecord).catch(e => console.log('写入文件异常', e));
+        await fs.appendFile(`${folderPath}${publisher}.json`, briefRecord + ',', 'utf-8').catch(e => console.log('写入文件异常', e));
     }
 }
 
