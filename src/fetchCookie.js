@@ -1,7 +1,16 @@
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 const agent = require('./getAgent');
 
 
-fetch('https://search.worldcat.org/api/access-tokens/auth_kWyvZKoTnlZ6J1fk2EUX6yxrIyepEmaQMc0A?email=true', {agent}).then(res =>res.json()).then(res => {
-    console.log('res :>>', res);
-})
+module.exports = function fetchCookie() {
+    return fetch('https://search.worldcat.org/zh-cn/search', {agent})
+        .then(res => res.text())
+        .then(res => {
+            const re = /,"secureToken":"(.*)","insightsToggle"/;
+            const cookieValue = re.exec(res)[1];
+            const cookie = `wc_tkn=${encodeURIComponent(cookieValue)}`;
+            console.log('res :>>', re.exec(res)[0], cookie);
+            return cookie;
+        });
+};
+

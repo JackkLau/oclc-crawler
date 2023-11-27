@@ -4,7 +4,7 @@ const {ua, cookie, newrelic} = require('./configs/config');
 const fetch = require('node-fetch'); // isomorphic-fetch 也是相同的设置
 const agent = require('./getAgent')
 
-async function getBookList(publisher, offset = 1) {
+async function getBookListFetch(publisher, offset = 1, cookie) {
     const search = {
         q: `pb:${publisher}`,
         content: 'nonFic',
@@ -12,7 +12,7 @@ async function getBookList(publisher, offset = 1) {
         itemSubType: 'book-printbook',
         orderBy: 'mostWidelyHeld',
         preferredLanguage: 'chi',
-        topic: '34000000',
+        topic: '34000000', // 主题编号
     };
     const page = {
         limit: 50, offset,
@@ -59,4 +59,4 @@ async function getBookList(publisher, offset = 1) {
     return result;
 }
 
-module.exports = getBookList;
+module.exports = getBookListFetch;
