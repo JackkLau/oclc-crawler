@@ -1,4 +1,4 @@
-const mockData= require('../src/mockData');
+const mockData= require('./mockData');
 const transDataToCSV = require("../src/transDataToCSV");
 const saveToFile = require("../src/saveToFile");
 
