@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>oclc 删选页面</title>
+    <script src="/js/vue.esm-browser.js" type="module"></script>
+</head>
+<body>
+<div id="app">
+    <h1>oclc 筛选器页面</h1>
+
+    <div style="display: flex;align-items: center;margin-bottom: 20px">查询链接：
+        <textarea v-model="urlRef"  cols="30" rows="10"></textarea>
+        {{urlRef}}
+    </div>
+
+    <div>
+        <button @click="submit">提交</button>
+        <button type="submit">开始抓取</button>
+    </div>
+
+</div>
+
+<script src="/js/index.js" type="module"></script>
+</body>
+</html>
