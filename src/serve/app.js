@@ -6,6 +6,8 @@
 
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+const qs = require('qs');
 
 const app = module.exports = express();
 
@@ -37,7 +39,9 @@ app.set('view engine', 'html');
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-
+app.use(cors({
+    origin: '*'
+}));
 
 app.get('/', function(req, res){
     res.render('index');
@@ -46,6 +50,9 @@ app.get('/', function(req, res){
 
 app.post('/query', function(req, res){
     console.log('req :>>', req.body);
+    const url = req.body.filterUrl;
+    const query = qs.parse(url.split('?')[1]);
+    console.log('query :>>', query);
     res.json({code: 0, data: {}, msg: '成功'});
 });
 
