@@ -15,12 +15,17 @@ async function startCrawler(publisher, cookie) {
         try {
             bookListResp = await getBookListFetch(publisher, offset, cookie);
         } catch (e) {
+            console.log('startCrawler 捕获错误，正在重新执行 :>>', e);
             const newCookie = await fetchCookie();
             bookListResp = await getBookListFetch(publisher, offset, newCookie);
         }
+
         const currentCount = bookListResp.numberOfRecords;
         totalPage = Math.ceil(currentCount / 50);
-
+        if (totalPage === 0) {
+            console.log('当前出版社真实存在图书数据为 :>>', offset);
+            break;
+        }
         console.log(`出版社：${publisher} 共有 ${totalPage} 页数据，本次请求${currentCount}条数据，正在将第 ${i} 页数据请求成功，准备写入文件`);
         if (currentCount > 0) {
             await saveToFile(publisher, bookListResp);

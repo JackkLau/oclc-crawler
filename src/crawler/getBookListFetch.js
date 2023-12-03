@@ -4,23 +4,27 @@ const {ua, cookie, newrelic} = require('./configs/config');
 const fetch = require('node-fetch'); // isomorphic-fetch 也是相同的设置
 const agent = require('./getAgent')
 
-async function getBookListFetch(publisher, offset = 1, cookie) {
+async function getBookListFetch(publisher, offset, cookie) {
     const search = {
         q: `pb:${publisher}`,
         content: 'nonFic',
         datePublished: '2018-2022',
-        itemSubType: 'book-printbook',
+        // itemSubType: 'book-printbook',
+        itemSubType: 'book-printbook,book-digital',
+        itemType: 'snd,video,audiobook',
         orderBy: 'mostWidelyHeld',
-        preferredLanguage: 'chi',
+        audience: 'nonJuv',
+        preferredLanguage: '',
         topic: '34000000', // 主题编号
     };
     const page = {
-        limit: 50, offset,
+        limit: 50,
+        offset
     };
     // 仅包含筛选条件的查询字符串参数
-    const filterQS = qs.stringify(search);
+    const filterQS = qs.stringify(search).replace(/\n+\s+/g, '');
     // 包含筛选条件和分页信息的查询字符串
-    const fullQS = qs.stringify({...search, ...page});
+    const fullQS = qs.stringify({...search, ...page}).replace(/\n+\s+/g, '');
     const url = `https://search.worldcat.org/api/search?${fullQS}`;
     const referer = `https://search.worldcat.org/zh-cn/search?${filterQS}`;
     const headers = {
@@ -42,6 +46,8 @@ async function getBookListFetch(publisher, offset = 1, cookie) {
         const res = await fetch(url, fetchParam).then(res => res.json());
         if (res.briefRecords) {
             result = res;
+        } else if( res.message.include('bad search result')) {
+
         } else {
             console.log('未正常获取数据 :>>', res);
             throw new Error(`执行失败，当前执行进度：
