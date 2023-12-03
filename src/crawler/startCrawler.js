@@ -4,8 +4,8 @@ const {sleep} = require('./utils');
 const saveToFile = require('./saveToFile');
 const fetchCookie = require('./fetchCookie');
 
-async function startCrawler(publisher, cookie) {
-
+async function startCrawler(publisher) {
+    const cookie = await fetchCookie();
     let totalPage = 1000;
     for (let i = 0; i <= totalPage; i++) {
         console.log(`正在请求出版社：${publisher} 的第 ${i} 页数据`);

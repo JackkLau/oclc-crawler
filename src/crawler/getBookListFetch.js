@@ -46,7 +46,7 @@ async function getBookListFetch(publisher, offset, cookie) {
         const res = await fetch(url, fetchParam).then(res => res.json());
         if (res.briefRecords) {
             result = res;
-        } else if( res.message.include('bad search result')) {
+        } else if( res.message?.includes('bad search result')) {
 
         } else {
             console.log('未正常获取数据 :>>', res);

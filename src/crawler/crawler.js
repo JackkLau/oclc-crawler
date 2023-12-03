@@ -26,19 +26,9 @@ async function start() {
         // "外研社", // 用此名字检索近五年无图书
     ];
     const countOfPublishers = publishers.length;
-    const cookie = await fetchCookie();
     for (let i = 0; i < countOfPublishers; i++) {
-        try {
-
-            await startCrawler(publishers[i], cookie);
+            await startCrawler(publishers[i]);
             await sleep(20);
-
-        } catch (e) {
-            console.log('start 方法捕获错误，正在重新执行 :>>', e);
-            const cookie = await fetchCookie();
-            await startCrawler(publishers[i], cookie);
-            await sleep(20);
-        }
     }
 }
 
@@ -52,7 +42,5 @@ start().then(() => {
     const duration = (Date.now() - startTime) / 1000;
     console.log('程序共计执行时间', duration, '秒');
     console.log('程序异常 :>>', err);
-    console.log('即将重新开始执行' );
-    await start();
 });
 
