@@ -7,15 +7,16 @@ const fetchCookie = require('./fetchCookie');
 async function startCrawler(publisher, cookie) {
 
     let totalPage = 1000;
-    for (let i = 1; i <= totalPage; i++) {
+    for (let i = 0; i <= totalPage; i++) {
         console.log(`正在请求出版社：${publisher} 的第 ${i} 页数据`);
         // const bookListResp = await getBookList(publisher, i);
         let bookListResp;
+        const offset = 50 * i + 1;
         try {
-            bookListResp = await getBookListFetch(publisher, i, cookie);
+            bookListResp = await getBookListFetch(publisher, offset, cookie);
         } catch (e) {
             const newCookie = await fetchCookie();
-            bookListResp = await getBookListFetch(publisher, i, newCookie);
+            bookListResp = await getBookListFetch(publisher, offset, newCookie);
         }
         const currentCount = bookListResp.numberOfRecords;
         totalPage = Math.ceil(currentCount / 50);

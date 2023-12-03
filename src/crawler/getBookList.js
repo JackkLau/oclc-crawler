@@ -19,7 +19,7 @@ async function getBookList(publisher, offset = 1) {
     }
     const page = {
         limit: 50,
-        offset,
+        offset: offset,
     }
     // 仅包含筛选条件的查询字符串参数
     const filterQS = qs.stringify(search);
