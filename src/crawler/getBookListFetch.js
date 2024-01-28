@@ -1,21 +1,20 @@
-const axios = require('axios');
 const qs = require('querystring');
-const {ua, cookie, newrelic} = require('./configs/config');
+const {ua} = require('./configs/config');
 const fetch = require('node-fetch'); // isomorphic-fetch 也是相同的设置
 const agent = require('./getAgent')
 
-async function getBookListFetch(publisher, offset, cookie) {
+async function getBookListFetch(publisher, publishYear, offset, cookie) {
     const search = {
         q: `pb:${publisher}`,
         content: 'nonFic',
-        datePublished: '2018-2022',
+        datePublished: String(publishYear),
         // itemSubType: 'book-printbook',
         itemSubType: 'book-printbook,book-digital',
         itemType: 'snd,video,audiobook',
-        orderBy: 'mostWidelyHeld',
+        // orderBy: 'mostWidelyHeld',
         audience: 'nonJuv',
-        preferredLanguage: '',
-        topic: '34000000', // 主题编号
+        // preferredLanguage: '',
+        topic: publisher.includes('全') ? '': '34000000', // 主题编号
     };
     const page = {
         limit: 50,

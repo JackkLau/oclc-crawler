@@ -5,6 +5,7 @@
   "main": "src/crawler/crawler.js",
   "scripts": {
     "start": "node src/crawler/crawler.js",
+    "hold": "node src/crawler/crawlerHoldings.js",
     "serve": "nodemon src/serve/app.js"
   },
   "keywords": [],
