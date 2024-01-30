@@ -4,6 +4,11 @@ const fetch = require('node-fetch'); // isomorphic-fetch 也是相同的设置
 const agent = require('./getAgent')
 
 async function getBookListFetch(publisher, publishYear, offset, cookie) {
+    let flag = false;
+    if (publisher.includes('全')) {
+        flag = true;
+        publisher = publisher.slice(0, publisher.length - 1)
+    }
     const search = {
         q: `pb:${publisher}`,
         content: 'nonFic',
@@ -14,7 +19,7 @@ async function getBookListFetch(publisher, publishYear, offset, cookie) {
         // orderBy: 'mostWidelyHeld',
         audience: 'nonJuv',
         // preferredLanguage: '',
-        topic: publisher.includes('全') ? '': '34000000', // 主题编号
+        topic: flag ? '': '34000000', // 主题编号
     };
     const page = {
         limit: 50,
